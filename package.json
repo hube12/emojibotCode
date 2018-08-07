@@ -1,0 +1,17 @@
+{
+    "name": "EmojiBot",
+    "version": "1.0.0",
+    "description": "A simple emoji bot",
+    "main": "bot.js",
+    "scripts": {
+        "start": "node bot.js"
+    },
+    "keywords": [
+        "games"
+    ],
+    "author": "neil",
+    "license": "ISC",
+    "dependencies": {
+        "discord.js": "^11.3.2"
+    }
+}
