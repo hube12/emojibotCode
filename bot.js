@@ -35,8 +35,10 @@ client.on('message', message => {
             message.channel.send("In order: " + allEmojis.slice(Math.floor(allEmojis.length / chunk) * chunk, Math.floor(allEmojis.length / chunk) * chunk + allEmojis.length % chunk).map(e => e.name).join(" "))
             message.channel.send("You just need to send !emoji nameOfEmoji numberBetween0and9")
         } else if (message.content.split(" ")[1] && /^\w+$/g.test(message.content.split(" ")[1])) {
+            
             var emoji = client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) ? client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) : "Error type !emoji list or !emoji help ";
-            message.reply(emoji.toString()==="Error type !emoji list or !emoji help "?emoji.toString(): emoji.toString().repeat(message.content.split(" ")[2] && /^[1-9]$/.test(message.content.split(" ")[2]) ? message.content.split(" ")[2] : 1))
+            message.channel.send(emoji.toString()==="Error type !emoji list or !emoji help "?emoji.toString(): emoji.toString().repeat(message.content.split(" ")[2] && /^[1-9]$/.test(message.content.split(" ")[2]) ? message.content.split(" ")[2] : 1))
+            message.delete().catch()
         }
     }
 });
