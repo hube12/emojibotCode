@@ -23,20 +23,21 @@ client.on("guildCreate", guild => {
 
 client.on('message', message => {
 
-    if (message.content.split(" ")[0] === '$emoji') {
+    if (message.content.split(" ")[0] === '$emoji' && !message.author.bot) {
         if (message.content.split(" ")[1] === "list" || message.content.split(" ")[1] == "help") {
+            message.channel.send("Everything will be send to you in dms")
             const allEmojis = Array.from(client.emojis.values())
             var chunk = 50
             for (let i = 0; i < Math.floor(allEmojis.length / chunk); i++) {
-                message.channel.send(allEmojis.slice(i * chunk, (i + 1) * chunk).map(e => e.toString()).join(" "))
-                message.channel.send("In order: " + allEmojis.slice(i * chunk, (i + 1) * chunk).map(e => e.name).join(" "))
+                message.author.send(allEmojis.slice(i * chunk, (i + 1) * chunk).map(e => e.toString()).join(" "))
+                message.author.send("In order: " + allEmojis.slice(i * chunk, (i + 1) * chunk).map(e => e.name).join(" "))
             }
-            message.channel.send(allEmojis.slice(Math.floor(allEmojis.length / chunk) * chunk, Math.floor(allEmojis.length / chunk) * chunk + allEmojis.length % chunk).map(e => e.toString()).join(" "))
-            message.channel.send("In order: " + allEmojis.slice(Math.floor(allEmojis.length / chunk) * chunk, Math.floor(allEmojis.length / chunk) * chunk + allEmojis.length % chunk).map(e => e.name).join(" "))
-            message.channel.send("You just need to send $emoji nameOfEmoji numberBetween0and9")
+            message.author.send(allEmojis.slice(Math.floor(allEmojis.length / chunk) * chunk, Math.floor(allEmojis.length / chunk) * chunk + allEmojis.length % chunk).map(e => e.toString()).join(" "))
+            message.author.send("In order: " + allEmojis.slice(Math.floor(allEmojis.length / chunk) * chunk, Math.floor(allEmojis.length / chunk) * chunk + allEmojis.length % chunk).map(e => e.name).join(" "))
+            message.author.send("You just need to send $emoji nameOfEmoji numberBetween0and9")
         } else if (message.content.split(" ")[1] && /^\w+$/g.test(message.content.split(" ")[1])) {
             
-            var emoji = client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) ? client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) : "Error type !emoji list or !emoji help ";
+            var emoji = client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) ? client.emojis.find(e=> e.name.toLowerCase()===message.content.split(" ")[1].toLowerCase()) : "Error type $emoji list or $emoji help ";
             message.channel.send(emoji.toString()==="Error type $emoji list or $emoji help "?emoji.toString(): emoji.toString().repeat(message.content.split(" ")[2] && /^[1-9]$/.test(message.content.split(" ")[2]) ? message.content.split(" ")[2] : 1))
             message.delete().catch(console.error)
         }
